@@ -1,0 +1,122 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- CSS only -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"
+    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'css/articles.css' %}">
+  <script src="{% static 'fontawesome/js/all.js' %}" crossorigin="anonymous"></script>
+
+  <head>
+
+  <body>
+    <header>
+      <nav class="navbar fixed-top navbar-expand-xxl navbar-dark bg-dark">
+        <div class="container-xxl">
+          <a class="navbar-brand" href="{% url 'homepage:home' %}">Щоденник мандрівника</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'articles:articles' %}">Articles</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'excursion:excursion_view' %}">Excursions in Odessa</a>
+              </li>
+            </ul>
+            <form class="d-flex" action = "{% url 'homepage:search' %}" method = "GET">
+              {% csrf_token %}
+              <input class="form-control me-2" type="search" placeholder="Search articles" aria-label="Search" name = "search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            <div class="user">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'profiles:cabinet' %}">{{ user.username }}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'account_signup' %}">Register</a>
+                </li>
+              {% endif %}
+              </ul>
+              </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="container">
+      {% if not_found %}
+      {% else %}
+        <section id="sidebar">
+          <div>
+            <h6 class="p-1 border-bottom">Filter</h6>
+            <ul class="list-group">
+              <form id = 'filter' method = 'GET'>
+                {% csrf_token %}
+                <li class="list-group-item list-group-item-action mb-2 rounded"><input type = 'submit' name = "Blog" value = 'Blog'></input></li>
+                <li class="list-group-item list-group-item-action mb-2 rounded"><input type = 'submit' name = "History" value = 'History'></input></li>
+                <li class="list-group-item list-group-item-action mb-2 rounded"><input type = 'submit' name = "Facts" value = 'Facts'></input></li>
+                <li class="list-group-item list-group-item-action mb-2 rounded"><input type = 'submit' name = "Guide" value = 'Guide'></input></li> 
+              </form> 
+            </ul>
+          </div>
+        </section>
+      {% endif %}
+    <section>
+      <div class="row">
+        {% if not_found %}
+          <H1>Не найдено =O</H1>
+        {% else %}
+          {% for art in index_articles %}
+            <div class="col">
+              <div class="card" style="width: 18rem;">
+                <img src="{{ art.article_image.url }}" class="card-img-top">
+                <div class="card-body">
+                  <h5 class="card-title">{{ art.caption_name }}</h5>
+                  <p class="card-text">{{ art.caption_mini_text }}</p>
+                  <a href="{% url 'articles:article_detail' art.id %}" class="btn btn-primary">Перейти к статье</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </section>
+  </div>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+      <a href="#" class="email">@gmail.com</a>
+      <div class="desc">
+          <p>Лицензия:</p>
+      </div>
+      <a href="#" class="phone">+380</a>
+    </div>
+  </div>
+</footer>
+
+<!-- JavaScript Bundle with Popper -->
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"
+integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+crossorigin="anonymous"></script>
+</body>
+</head>

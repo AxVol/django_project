@@ -1,0 +1,120 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- CSS only -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"
+    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'css/cabinet.css' %}">
+  <script src="{% static 'fontawesome/js/all.js' %}" crossorigin="anonymous"></script>
+  <body>
+    <header>
+      <nav class="navbar fixed-top navbar-expand-xxl navbar-dark bg-dark">
+        <div class="container-xxl">
+          <a class="navbar-brand" href="{% url 'homepage:home' %}">Щоденник мандрівника</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'articles:articles' %}">Articles</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'excursion:excursion_view' %}">Excursions in Odessa</a>
+              </li>
+            </ul>
+            <form class="d-flex" method = "GET" action = "{% url 'homepage:search' %}">
+              {% csrf_token %}
+              <input class="form-control me-2" type="search" placeholder="Search articles" aria-label="Search" name = "search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            <div class="user">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% if user.is_authenticated %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
+                  </li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="container qer">
+      <section id="sidebar">
+        <div>
+          <h6 class="p-1 border-bottom">Info</h6>
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-action mb-2 rounded"><a href="#">Username: {{ user.username }}</a></li>
+            <li class="list-group-item list-group-item-action mb-2 rounded"><a href="#">Email: {{ user.email }}</a></li>
+            <li class="list-group-item list-group-item-action mb-2 rounded"><a href="{% url 'account_change_password' %}">Password: *************</a></li>
+          </ul>
+        </div>
+      </section>
+      <section>
+        <div class="row">
+          <h1>История Экскурсий:</h1>
+          {% if empty %}
+            <h3>История пуста</h3>
+            <div class="row">
+              <h1>Мои статьи:</h1>
+              <h3>Статей нету, так создайте их</h3>
+            </div>
+          {% else %}
+            {% for excursion in excursions %}
+              <div class="col">
+                <div class="card" style="width: 18rem;">
+                  <img src="{{ excursion.excursion_image.url }}" class="card-img-top">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ excursion.caption_name }}</h5>
+                    <p class="card-text">{{ excursion.caption_mini_text }}</p>
+                    {% for reg_excursion in reg_excursions %}
+                      {% if excursion.id == reg_excursion.reg_excursion_id %}
+                      <p class="card-text">Дата вашей записи - {{ reg_excursion.reg_date }}</p>
+                      {% endif %}
+                    {% endfor %}
+                    <a href="{% url 'excursion:excursion_detail' excursion.id %}" class="btn btn-primary">Перейти к статье</a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+          <h1>Мои статьи:</h1>
+          {% for article in articles %}
+            <div class="col">
+              <div class="card" style="width: 18rem;">
+                <img src="{{ article.article_image.url }}" class="card-img-top">
+                <div class="card-body">
+                  <h5 class="card-title">{{ article.caption_name }}</h5>
+                  <p class="card-text">{{ article.caption_mini_text }}</p>
+                  <a href="{% url 'articles:article_detail' article.id %}" class="btn btn-primary">Перейти к статье</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+          {% endif %}
+        <div class="row">
+          <h1>Создать статью:</h1>
+          <div class="card-body">
+            <a href="{% url 'profiles:create_article' %}" class="btn btn-primary">Перейти к Созданию</a>
+          </div>
+        </div>
+      </section>
+          <!-- JavaScript Bundle with Popper -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"
+    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+    crossorigin="anonymous"></script>
+</body>
+</head>
