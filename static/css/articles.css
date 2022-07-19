@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Roboto+Condensed&display=swap');
+
+body{
+    background-color: f2f2f2;
+    font-family: "Open+Sans";
+    font-weight: 300;
+    font-size: 16px;
+    color: #555;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 75px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Roboto+Condense";
+    font-weight: 300;
+}
+
+ul ,li{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.comments-block{
+    margin-top: 10px;
+}
+
+.comment-info{
+    display: flex;
+    justify-content: space-between;
+    -webkit-box-pack: justify;
+}
+
+.comment-head{
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-align: baseline;
+    align-items: baseline;
+    margin-bottom: 6px;
+    width: 100%;
+    min-width: 0;
+}
+
+.comment-author {
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
+    margin-bottom: 0px;
+    line-height: 1.4;
+}
+
+.comment-date {
+    width: 100%;
+    font-size: 12px;
+}
+
+.comment-body {
+    position: relative;
+}
+
+.comment-text {
+    word-break: break-word;
+    overflow: hidden;
+}
+
+.user-img{
+    position: relative;
+    float: left;
+    width: 83px;
+    height: 83px;
+    margin-right: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 1;
+}
+
+p{
+    line-height: 28px;
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+.apply{
+    border-color: black;
+    font-family: "Open+Sans", sans-serif;
+    border-radius: 100px;
+    padding: 0px 40px;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 2;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 1185px;
+    text-align: center;
+}
+
+#sidebar{
+    width: 15%;
+    padding: 10px;
+    margin-bottom: 250px;
+    float: left;
+}
+
+.ol{
+    width: 940px;
+    height: 625px;
+}
+
+.apply:hover{
+    opacity: .6;
+}
+
+.wer{
+    margin-left: 165px;
+}
+
+.gallery{
+    background: #F3F6FC;
+    margin-top: px;
+}
+
+.gallery-list{
+    display: flex;
+    justify-content: center;
+}
+
+.gallery-content{
+    padding: 30px 0;
+}
+
+.gallery-item{
+    width: 174px;
+    height: 174px;
+    margin-right: 20px;
+    cursor: pointer;
+    transition: .4s;
+}
+
+.gallery-item:hover{
+    opacity: 0.7;
+}
+
+.gallery-item:last-child{
+    margin-right: 0;
+}
+
+.gallery-img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.awe{
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+.awe{
+    border: none;
+    background: none;
+}
+
+.awe1{
+    border: none;
+    background: none;
+}
+
+.fa-thumbs-up{
+    color: springgreen;
+}
+
+.fa-thumbs-down{
+    color: red;
+}
+
+.footer{
+    margin-top: 30px;
+    padding: 28px 0 53px 0;
+    background-color: rgb(223, 223, 223);
+}
+
+.footer-content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 120px;
+}
+
+.user{
+    margin-left: 7px;
+}
