@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block home %}
+      <div class="card overflow-hidden border-0 rounded-0 text-center mt-0">
+        <img src="{% static 'img/nochnoj_gorod_ogni_goroda_obzor_129026_3840x2400.jpg' %}" class="card-img rounded-0" alt="">
+        <div class="card-img-overlay d-flex flex-column justify-content-center">
+          <div class="ep">
+            <p class="card-title text-uppercase">Щоденник мандрівника</p>
+        </div>
+        </div>
+      </div>
+{% endblock %}
+
+{% block content %}
+    <section>
+      <div class="container">
+        <div class="op">
+        <p>
+          Последние статьи:
+        </p>
+        </div>
+          <div class="row">
+            {% for last in last_articles %}
+              <div class="col">
+                <div class="card" style="width: 18rem;">
+                  <img src="{{ last.article_image.url }}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ last.caption_name }}</h5>
+                    <p class="card-text">{{ last.caption_mini_text }}</p>
+                    <a href="{% url 'articles:article_detail' last.id %}" class="btn btn-primary">Перейти к статье</a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+      </div>
+    </section>
+    <section>
+      <div class="container">
+        <div class="op">
+        <p>
+          Популярные статьи:
+        </p>
+        </div>
+        <div class="row">
+          {% for popular in popular_articles %}
+            <div class="col">
+              <div class="card" style="width: 18rem;">
+                <img src="{{ popular.article_image.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{ popular.caption_name }}</h5>
+                  <p class="card-text">{{ popular.caption_mini_text }}</p>
+                  <a href="{% url 'articles:article_detail' popular.id %}" class="btn btn-primary">Перейти к статье</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="container">
+        <div class="op">
+          <p>
+            Тематический опрос:
+            <br><br>
+            Выберите страну в которой вы хотели бы побывать.
+          </p>
+        </div>
+        <ul class="list-group">
+          {% for countryes in country %}
+            <li class="list-group-item">
+              <input class="form-check-input me-1" name="best country" type="radio" value="" aria-label="...">
+              {{ countryes }}
+            </li>
+          {% endfor %}
+          <li class="list-group-item border-0">
+            <form action = '' id = 'form' method = 'POST'>
+              {% csrf_token %}
+              <button class="btn btn-primary mt-3">Отправить</button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </section>
+{% endblock %}

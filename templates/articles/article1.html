@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'css/articles.css' %}">
+{% endblock %}
+
+{% block content %}
+      <div class="container">
+          <div class="wer">
+        <div class="row align-items-center">
+            <div class="col">
+              <div class="ol">
+                <img src="{{ image.url }}" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+        <h1>{{ caption_name }}</h1>
+        <p>
+            {{ articles_text }}
+        </p>
+      </div>
+    <section>
+      <div class="container">
+        <H1>Comments {{ counter }}</H1>
+        <div class="form-floating">
+          {% if user.is_authenticated %}
+            <form action = '' id = 'form' method = 'POST'>
+              {% csrf_token %}
+              <input class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name = "comment"></input>
+              <label for="floatingTextarea">Type something to send a comment</label>
+              <button class="apply">Send</button>
+            </form>
+          {% else %}
+          <p>you will be able to write comments after registration, then please
+            <a href="{{ signup_url }}">sign up</a> first.</p>
+          {% endif %}  
+          {% for com in detail_comments %}
+            {% if com.articles_id == articles_id %}
+              <div class="comments-block">
+                <div class="comment">
+                  <div class="comment-info">
+                    <div class="comment-head">
+                      <div class="comment-author">{{ com.author }}</div>
+                      <div class="comment-date" title="14.10.2021 18:22:34">{{ com.pub_date }}</div>
+                    </div>
+                  </div>
+                  <div class="comment-body">
+                    <div class="comment-text">{{ com.comment_text }}</div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+{% endblock %}

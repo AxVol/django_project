@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section>
+      <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        <div class="container qwe">
+          <p>Already have an account? Then please <a href="{{ login_url }}">sign in</a></p>
+          <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">@</span>
+              <input type="text" class="form-control" name = "username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" autocomplete = "username" minlength = "4" maxlength = "150" required id = "id_username">
+          </div>       
+            <div class="input-group mb-3">
+              <input type="email" class="form-control" name = "email" placeholder="Email" aria-label="Email" aria-describedby="basic-addon2" autocomplete = "email" required id = "id_email">
+              <span class="input-group-text" id="basic-addon2">@example.com</span>
+            </div>        
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" name = "password1" autocomplete = "new-password" required id="id_password1" placeholder="Password" aria-label="Password" aria-describedby="basic-addon3">
+            </div>
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" name = "password2" autocomplete = "new-password" required id="id_password2" placeholder="Password repeat" aria-label="Password" aria-describedby="basic-addon3">
+            </div>
+            <button type="submit" class="apply"><p>Register</p></button>
+        </div>
+      </form>
+    </section>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'css/cabinet.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container qer">
+      <section id="sidebar">
+        <div>
+          <h6 class="p-1 border-bottom">Info</h6>
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-action mb-2 rounded"><a href="#">Username: {{ user.username }}</a></li>
+            <li class="list-group-item list-group-item-action mb-2 rounded"><a href="#">Email: {{ user.email }}</a></li>
+            <li class="list-group-item list-group-item-action mb-2 rounded"><a href="{% url 'account_change_password' %}">Password: *************</a></li>
+          </ul>
+        </div>
+      </section>
+      <section>
+        <div class="row">
+          <h1>История Экскурсий:</h1>
+          {% if empty %}
+            <h3>История пуста</h3>
+            <div class="row">
+              <h1>Мои статьи:</h1>
+              <h3>Статей нету, так создайте их</h3>
+            </div>
+          {% else %}
+            {% for excursion in excursions %}
+              <div class="col">
+                <div class="card" style="width: 18rem;">
+                  <img src="{{ excursion.excursion_image.url }}" class="card-img-top">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ excursion.caption_name }}</h5>
+                    <p class="card-text">{{ excursion.caption_mini_text }}</p>
+                    {% for reg_excursion in reg_excursions %}
+                      {% if excursion.id == reg_excursion.reg_excursion_id %}
+                      <p class="card-text">Дата вашей записи - {{ reg_excursion.reg_date }}</p>
+                      {% endif %}
+                    {% endfor %}
+                    <a href="{% url 'excursion:excursion_detail' excursion.id %}" class="btn btn-primary">Перейти к статье</a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+          <h1>Мои статьи:</h1>
+          {% for article in articles %}
+            <div class="col">
+              <div class="card" style="width: 18rem;">
+                <img src="{{ article.article_image.url }}" class="card-img-top">
+                <div class="card-body">
+                  <h5 class="card-title">{{ article.caption_name }}</h5>
+                  <p class="card-text">{{ article.caption_mini_text }}</p>
+                  <a href="{% url 'articles:article_detail' article.id %}" class="btn btn-primary">Перейти к статье</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+          {% endif %}
+        <div class="row">
+          <h1>Создать статью:</h1>
+          <div class="card-body">
+            <a href="{% url 'profiles:create_article' %}" class="btn btn-primary">Перейти к Созданию</a>
+          </div>
+        </div>
+      </section>
+{% endblock %}

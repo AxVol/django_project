@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'css/exursions.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section>
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="de">
+              <img src="{{ excursion_image.url }}" alt="" class="ol">
+            </div>
+          </div>
+         </div>
+         <div class="row align-items-center">
+           <div class="col">
+             <h1>Название: {{ caption_name }}</h1>
+           </div>
+         </div>
+         <div class="row align-items-center">
+          <div class="col">
+            <h1>Описание: {{ caption_mini_text }}</h1>
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col">
+            <h1>Длительность: {{ duraction_in_hour }} час</h1>
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col">
+            <h1>Даты: {% for date in date_ex %} {{ date }} {% endfor %}</h1>
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col">
+            <h1>Время:
+              {% for time in time_ex %}
+                {{ time }}
+              {% endfor %}
+            </h1>
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col">
+            <h1>Цена: {{ price }} грн. за одного человека</h1>
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <div class="col">
+            <h1>Свободных мест: {{register}}/{{ place }}</h1>
+          </div>
+        </div>
+        {% if user.is_authenticated %}
+          <form method = "GET", action = "{{id}}/register_excursion">
+            <div class="apic">
+              <button type="submit" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#Modalaply" >Apply</button>
+            </div>
+          </form>
+        {% endif %}
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+        <a href="#" class="email">@gmail.com</a>
+        <div class="desc">
+        <a href="#" class="email">Лицензия</a>
+        </div>
+        <a href="#" class="phone">+380</a>
+      </div>
+    </div>
+    </footer>
+{% endblock %}

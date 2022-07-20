@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'css/articles.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+      <div class="row">
+        {% if not_found %}
+          <H1>Не найдено =O</H1>
+        {% else %}
+            {% for art in index_articles %}
+            <div class="col">
+              <div class="card" style="width: 18rem;">
+                <img src="{{ art.article_image.url }}" class="card-img-top">
+                <div class="card-body">
+                  <h5 class="card-title">{{ art.caption_name }}</h5>
+                  <p class="card-text">{{ art.caption_mini_text }}</p>
+                  <a href="{% url 'articles:article_detail' art.id %}" class="btn btn-primary">Перейти к статье</a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            {% for excursion in index_excursion %}
+            <div class="col">
+              <div class="card" style="width: 18rem;">
+                <img src="{{ excursion.excursion_image.url }}" class="card-img-top">
+                <div class="card-body">
+                  <h5 class="card-title">{{ excursion.caption_name }}</h5>
+                  <p class="card-text">{{ excursion.caption_mini_text }}</p>
+                  <a href="{% url 'excursion:excursion_detail' excursion.id %}" class="btn btn-primary">Перейти к статье</a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+      </div>
+    </section>
+  </div>
+{% endblock %}

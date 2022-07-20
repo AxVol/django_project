@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'css/exursions.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+    <section id="sidebar">
+      <div>
+        <h6 class="p-1 border-bottom">Filter</h6>
+        <ul class="list-group">
+          <form id = 'filter' method = 'GET'>
+          {% csrf_token %}
+            <li class="list-group-item list-group-item-action mb-2 rounded"><input type = 'submit' name = "Streets" value = 'Streets'></input></li>
+            <li class="list-group-item list-group-item-action mb-2 rounded"><input type = 'submit' name = "Historical" value = 'Historical'></input></li>
+            <li class="list-group-item list-group-item-action mb-2 rounded"><input type = 'submit' name = "Buildings" value = 'Buildings'></input></li>
+          </form>
+        </ul>
+      </div>
+  </section>
+    <section>
+      <div class="row">
+        {% if index_articles %}
+          {% for excursion in index_articles %}
+            <div class="col">
+              <div class="card" style="width: 18rem;">
+                <img src="{{ excursion.excursion_image.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{ excursion.caption_name }}</h5>
+                  <p class="card-text">{{ excursion.caption_mini_text }}</p>
+                  <a href="{% url 'excursion:excursion_detail' excursion.id %}" class="btn btn-primary">Перейти к статье</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          {% for excursion in index_excursion %}
+            <div class="col">
+              <div class="card" style="width: 18rem;">
+                <img src="{{ excursion.excursion_image.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{ excursion.caption_name }}</h5>
+                  <p class="card-text">{{ excursion.caption_mini_text }}</p>
+                  <a href="{% url 'excursion:excursion_detail' excursion.id %}" class="btn btn-primary">Перейти к статье</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+  </section>
+</div>
+{% endblock %}
