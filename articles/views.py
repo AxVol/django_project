@@ -23,7 +23,7 @@ def articles(request):
 
     return render(request, 'articles/articles.html', context)
 
-# Наполнение контентом страницы, подхдящий для запрошенной статьи на основе айди
+# Наполнение контентом страницы, подходящий для запрошенной статьи на основе айди
 def content(detail_articles, detail_comments, articles_id):
     for article in detail_articles:
         if article.id == articles_id:
